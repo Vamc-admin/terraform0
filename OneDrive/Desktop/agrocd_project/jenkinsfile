@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    environment{
+        DOCKERHUB_USERNAME="vamc470"
+        APP_NAME="agrocd_app"
+        IMAGE_TAG="${BUILD_NUMBER}"
+        IMAGE_NAME="${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
+        REGISTRY_CREDS="dockerhub"
+    }
+    stages{
+        stage('clean workspace'){
+            steps{
+                script{
+                    cleanWs()
+                }
+            }
+        }
+
+        stage('checkout SCM'){
+            steps{
+                script{
+                    git credentialsId:'github',
+                    url:'https://github.com/Vamc-admin/agrocd_app.git',
+                    branch:'main'
+                }
+            }
+
+        }
+    }
+}
+
+//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
